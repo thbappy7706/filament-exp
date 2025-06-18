@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use CWSPS154\UsersRolesPermissions\UsersRolesPermissionsPlugin;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -53,10 +54,10 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-            ])
+            ])->databaseNotifications()->databaseTransactions()
             ->plugins([
-                LightSwitchPlugin::make()
-                    ->position(Alignment::TopLeft),
+                LightSwitchPlugin::make()->position(Alignment::TopLeft),
+                UsersRolesPermissionsPlugin::make(),
             ])
 
 
