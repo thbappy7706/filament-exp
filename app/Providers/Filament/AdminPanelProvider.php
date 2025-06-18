@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\OwnerResource;
+use App\Filament\Resources\PatientResource;
+use App\Filament\Resources\TreatmentResource;
 use CWSPS154\UsersRolesPermissions\UsersRolesPermissionsPlugin;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
@@ -57,7 +60,7 @@ class AdminPanelProvider extends PanelProvider
             ])->databaseNotifications()->databaseTransactions()
             ->plugins([
                 LightSwitchPlugin::make()->position(Alignment::TopLeft),
-                UsersRolesPermissionsPlugin::make(),
+//                UsersRolesPermissionsPlugin::make(),
             ])
 
 
