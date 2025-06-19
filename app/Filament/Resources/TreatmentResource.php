@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class TreatmentResource extends Resource
 {
     protected static ?string $model = Treatment::class;
+    protected static ?string $navigationGroup = 'Medical';
+
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
     protected static ?int $navigationSort = 3;
 

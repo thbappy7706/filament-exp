@@ -14,6 +14,8 @@ use Filament\Tables\Table;
 class PatientResource extends Resource
 {
     protected static ?string $model = Patient::class;
+    protected static ?string $navigationGroup = 'Medical';
+
     protected static ?string $navigationIcon = 'heroicon-o-heart';
     protected static ?int $navigationSort = 2;
 

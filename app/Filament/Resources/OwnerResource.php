@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 class OwnerResource extends Resource
 {
     protected static ?string $model = Owner::class;
+    protected static ?string $navigationGroup = 'Medical';
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?int $navigationSort = 1;
 

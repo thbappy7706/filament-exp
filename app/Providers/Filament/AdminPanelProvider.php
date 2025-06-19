@@ -11,6 +11,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -31,6 +32,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()->defaultThemeMode(ThemeMode::Dark)->spa()
+            ->collapsibleNavigationGroups()
             ->sidebarCollapsibleOnDesktop()->sidebarWidth('15rem')
             ->id('admin')->path('admin')->brandName('Filament')
             ->login()->profile()->registration()
@@ -62,10 +64,23 @@ class AdminPanelProvider extends PanelProvider
                 LightSwitchPlugin::make()->position(Alignment::TopLeft),
 //                UsersRolesPermissionsPlugin::make(),
             ])
+            ->navigationGroups($this->navigationGroups())
 
 
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+
+
+    public function navigationGroups(): array
+    {
+      return [
+          NavigationGroup::make()
+              ->label('Medical')
+              ->icon('heroicon-o-user-group'),
+
+
+      ];
     }
 }
