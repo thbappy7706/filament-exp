@@ -62,10 +62,9 @@ class AdminPanelProvider extends PanelProvider
             ])->databaseNotifications()->databaseTransactions()
             ->plugins([
                 LightSwitchPlugin::make()->position(Alignment::TopLeft),
-//                UsersRolesPermissionsPlugin::make(),
             ])
+//            ->collapsibleNavigationGroups(false)
             ->navigationGroups($this->navigationGroups())
-
 
             ->authMiddleware([
                 Authenticate::class,
@@ -77,8 +76,11 @@ class AdminPanelProvider extends PanelProvider
     {
       return [
           NavigationGroup::make()
+              ->label('Administration'),
+
+          NavigationGroup::make()->collapsible()
               ->label('Medical')
-              ->icon('heroicon-o-user-group'),
+              ->icon('heroicon-o-home-modern'),
 
 
       ];
