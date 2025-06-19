@@ -31,7 +31,8 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()->defaultThemeMode(ThemeMode::Dark)->spa()
+            ->default()->defaultThemeMode(ThemeMode::Dark)
+            ->spa()
             ->collapsibleNavigationGroups()
             ->sidebarCollapsibleOnDesktop()->sidebarWidth('15rem')
             ->id('admin')->path('admin')->brandName('Filament')
@@ -75,13 +76,8 @@ class AdminPanelProvider extends PanelProvider
     public function navigationGroups(): array
     {
       return [
-          NavigationGroup::make()
-              ->label('Administration'),
-
-          NavigationGroup::make()->collapsible()
-              ->label('Medical')
-              ->icon('heroicon-o-home-modern'),
-
+          NavigationGroup::make()->label('Administration'),
+          NavigationGroup::make()->collapsible()->label('Medical')->icon('heroicon-o-home-modern'),
 
       ];
     }
