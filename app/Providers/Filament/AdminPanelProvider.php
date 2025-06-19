@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Login;
 use App\Filament\Resources\OwnerResource;
 use App\Filament\Resources\PatientResource;
 use App\Filament\Resources\TreatmentResource;
@@ -35,8 +36,8 @@ class AdminPanelProvider extends PanelProvider
             ->spa()
             ->collapsibleNavigationGroups()
             ->sidebarCollapsibleOnDesktop()->sidebarWidth('15rem')
-            ->id('admin')->path('admin')->brandName('Filament')
-            ->login()->profile()->registration()
+            ->id('admin')->path('admin')->brandName('Filament-Exp')
+            ->login(Login::class)->profile()->registration()
             ->colors([
                 'primary' => Color::Green,
             ])
