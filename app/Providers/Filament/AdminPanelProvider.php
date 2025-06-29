@@ -39,7 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->collapsibleNavigationGroups()
             ->sidebarCollapsibleOnDesktop()->sidebarWidth('15rem')
             ->id('admin')->path('admin')->brandName('Filament-Exp')
-            ->login()->profile()->registration()
+            ->login()->profile()->registration()->font('Poppins')->favicon('https://laravel.com/img/favicon/apple-touch-icon.png')
             ->colors([
                 'primary' => Color::Green,
             ])
