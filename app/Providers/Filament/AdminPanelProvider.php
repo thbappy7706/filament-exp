@@ -2,11 +2,9 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\Auth\Login;
 use App\Filament\Resources\OwnerResource;
 use App\Filament\Resources\PatientResource;
 use App\Filament\Resources\TreatmentResource;
-use CWSPS154\UsersRolesPermissions\UsersRolesPermissionsPlugin;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -26,6 +24,10 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Awcodes\LightSwitch\LightSwitchPlugin;
 use Awcodes\LightSwitch\Enums\Alignment;
+use Filament\Navigation\NavigationItem;
+
+
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -37,10 +39,12 @@ class AdminPanelProvider extends PanelProvider
             ->collapsibleNavigationGroups()
             ->sidebarCollapsibleOnDesktop()->sidebarWidth('15rem')
             ->id('admin')->path('admin')->brandName('Filament-Exp')
-            ->login(Login::class)->profile()->registration()
+            ->login()->profile()->registration()
             ->colors([
                 'primary' => Color::Green,
             ])
+
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -51,6 +55,7 @@ class AdminPanelProvider extends PanelProvider
 //                Widgets\AccountWidget::class,
 //                Widgets\FilamentInfoWidget::class,
             ])
+
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -67,6 +72,10 @@ class AdminPanelProvider extends PanelProvider
             ])
 //            ->collapsibleNavigationGroups(false)
             ->navigationGroups($this->navigationGroups())
+//            ->renderHook(
+//                'panels::topbar.end',
+//                fn (): string => view('')->render()
+//            )
 
             ->authMiddleware([
                 Authenticate::class,
