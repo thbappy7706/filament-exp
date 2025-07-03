@@ -87,6 +87,7 @@ class AdminPanelProvider extends PanelProvider
     {
       return [
           NavigationGroup::make()->label('Administration'),
+          NavigationGroup::make()->label('Shop'),
           NavigationGroup::make()->collapsible()->label('Medical')->icon('heroicon-o-home-modern'),
 
       ];
