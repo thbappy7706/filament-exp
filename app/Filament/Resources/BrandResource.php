@@ -38,11 +38,10 @@ class BrandResource extends Resource
             ->schema([
                 Section::make('Brand ')
                     ->schema([
-                        TextInput::make('name')->required()->maxLength(255) ->live(onBlur:  true)->unique()
+                        TextInput::make('name')->required()->maxLength(255) ->live(onBlur:  true)->unique( table: Brand::class, column: 'name', ignoreRecord: true)
                             ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
-
-                        TextInput::make('slug')->disabled()->dehydrated()->required()->unique(),
-                        TextInput::make('url')->label('Website URL')->unique()->required()->columnSpanFull()->url(),
+                        TextInput::make('slug')->disabled()->dehydrated()->required()->unique(table: Brand::class, column: 'slug', ignoreRecord: true),
+                        TextInput::make('url')->label('Website URL')->unique(table: Brand::class, column: 'url', ignoreRecord: true)->required()->columnSpanFull()->url(),
                         ColorPicker::make('primary_hex')->label('Primary HEX Color')->columnSpanFull(),
                         Toggle::make('is_visible')->label('Is Visible')->columnSpanFull(),
                         MarkdownEditor::make('description')->label('Description')->maxLength(65535)->columnSpanFull(),
@@ -71,7 +70,7 @@ class BrandResource extends Resource
                 Tables\Columns\ColorColumn::make('primary_hex')->label('Color')->sortable()->searchable(),
                 Tables\Columns\IconColumn::make('is_visible')->label('Visibility')->boolean()->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')->sortable()->date(),
-            ])
+            ])->defaultSort('id', 'desc')
             ->filters([
                 //
             ])
