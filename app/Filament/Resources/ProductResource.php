@@ -6,6 +6,7 @@ use App\Enums\ProductTypeEnum;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
@@ -22,6 +23,7 @@ class ProductResource extends Resource
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-bolt';
+    protected static ?int $navigationSort = 0;
     protected static ?string $navigationGroup = 'Shop';
 
     public static function form(Form $form): Form
@@ -101,11 +103,15 @@ class ProductResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_visible')->label('Visibility')->boolean()
-                    ->trueLabel('Only visible')->falseLabel('Only Hidden')->native(false),
+                    ->trueLabel('Only Visible')->falseLabel('Only Hidden')->native(false),
                 Tables\Filters\SelectFilter::make('brand')->relationship('brand', 'name')->preload()->searchable(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->slideOver(),
+                Tables\Actions\ActionGroup::make([
+                   Tables\Actions\ViewAction::make(),
+                   Tables\Actions\EditAction::make(),
+                   Tables\Actions\DeleteAction::make(),
+               ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
