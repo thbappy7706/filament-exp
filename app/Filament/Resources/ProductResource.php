@@ -102,7 +102,8 @@ class ProductResource extends Resource
 
 
                     Forms\Components\Section::make('Associations')->schema([
-                        Forms\Components\Select::make('brand_id')->relationship('brand', 'name')->preload()->searchable(),
+                        Forms\Components\Select::make('brand_id')->relationship('brand', 'name')->preload()->searchable()->required(),
+                        Forms\Components\Select::make('categories')->relationship('categories', 'name')->preload()->multiple()->searchable()->required(),
 
                     ]),
 
