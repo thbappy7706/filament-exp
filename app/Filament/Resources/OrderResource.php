@@ -45,6 +45,10 @@ class OrderResource extends Resource
                             Forms\Components\Select::make('customer_id')->relationship('customer', 'name',
                                 fn(Builder $query) => $query->limit(10)
                             )->preload()->searchable()->required(),
+
+                            Forms\Components\TextInput::make('shipping_price')->numeric()->dehydrated()->label('Shipping Price')->required(),
+
+
                             Forms\Components\Select::make('status')->options([
                                 OrderStatusEnum::PENDING->value => ucfirst('pending'),
                                 OrderStatusEnum::PROCESSING->value => ucfirst('processing'),
@@ -62,11 +66,24 @@ class OrderResource extends Resource
 
                             Forms\Components\Repeater::make('items')->relationship()->schema([
 
-                                Forms\Components\Select::make('product_id')->label('Product')->options(Product::query()->pluck('name', 'id'))->searchable()->required(),
-                                Forms\Components\TextInput::make('quantity')->label('Quantity')->numeric()->default(1)->required(),
-                                Forms\Components\TextInput::make('unit_price')->label('Unit Price')->numeric()->disabled()->dehydrated()->required(),
+                                Forms\Components\Select::make('product_id')->label('Product')
+                                    ->options(Product::query()->pluck('name', 'id'))
+                                    ->searchable()->required()
+                                     ->reactive()
+                                        ->afterStateUpdated(fn($state, Forms\Set $set) =>
 
-                            ])->columns(3)
+                                        $set('unit_price',Product::find($state)?->price ?? 0)),
+
+                                Forms\Components\TextInput::make('quantity')->label('Quantity')->numeric()
+                                    ->live()->dehydrated()
+                                    ->step(100)->default(1)->required(),
+
+                                Forms\Components\TextInput::make('unit_price')->label('Unit Price')->numeric()->disabled()->dehydrated()->required(),
+                                Forms\Components\Placeholder::make('total_price')->label('Total Price')->content(function($get) {
+                                                            return $get('quantity') * $get('unit_price');
+                                                })
+
+                            ])->columns(4)
                         ]),
 
 
@@ -91,7 +108,7 @@ class OrderResource extends Resource
                         'declined' => 'danger',
                     })->formatStateUsing(fn(string $state): string => ucfirst($state))->sortable()->searchable(),
 
-                Tables\Columns\TextColumn::make('total_price')->sortable()->searchable()->summarize([Tables\Columns\Summarizers\Sum::make()->money()]),
+//                Tables\Columns\TextColumn::make('total_price')->sortable()->searchable()->summarize([Tables\Columns\Summarizers\Sum::make()->money()]),
                 Tables\Columns\TextColumn::make('created_at')->label('Order Date')->sortable()->date(),
             ])
             ->filters([
